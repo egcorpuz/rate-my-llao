@@ -1,0 +1,47 @@
+{% include "header.html" %}
+
+<div class="px-4 pt-5 my-3 text-center">
+  <div class="custom-title">
+    <h1 class="display-4 fw-bold text-body-emphasis text-muted">
+      <p class="text-muted">get, get,<br />llao!</p>
+      <p></p>
+    </h1>
+  </div>
+  <div class="col-lg-6 mx-auto">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <p class="flash">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %}
+    <br />
+    <p class="lead mb-4">
+      Did you know? With the current available toppings, you can create 4,096
+      combinations of toppings for a Large Tub. There are 8,192 combinations for
+      a Sanum Petit and 524,288 combinations for a Sanum Regular. See if we
+      can mix and try them all!
+    </p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <a href="{{url_for('create_combo')}}"
+        ><button type="button" class="btn btn-success btn-lg px-4 me-sm-3">
+          Submit a Combo
+        </button></a
+      >
+      <a href="#"
+        ><button type="button" class="btn btn-outline-secondary btn-lg px-4">
+          View All
+        </button></a
+      >
+    </div>
+  </div>
+  <div class="overflow-hidden" style="max-height: 30vh"></div>
+</div>
+
+<div class="px-4 pt-5 my-3 text-center">
+  <h1 class="display-4 fw-bold text-body-emphasis text-muted">
+    Nothing to see here yet. We need at least two combos. Register and be the
+    first to build combo cards.
+  </h1>
+
+  <div class="overflow-hidden" style="max-height: 30vh"></div>
+</div>
+
+{% include "footer.html" %}

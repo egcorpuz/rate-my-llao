@@ -1,0 +1,124 @@
+{% include "header.html" %} {% from "bootstrap5/form.html" import render_form,
+render_field %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>{{combo.combo_name}}</h1>
+      <span class="sub-text"> by {{combo.author.name}}</span>
+      <span class="sub-text"> on {{combo.date}}</span>
+      <table class="table table-dark table-striped table-hover">
+        <tbody>
+          <tr>
+            <td>Overall Rank</td>
+            <td>No. of Ratings</td>
+            <td>Overall Rating</td>
+            <td>Type</td>
+            <td>Size</td>
+            <td>Toppings</td>
+          </tr>
+          <tr>
+            <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</td>
+            <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{%else:%}{{combo.number_of_ratings}}{%endif%}</td>
+            <td>
+              {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else:
+              %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}
+            </td>
+            <!--td>{{combo.combo_name}}</td-->
+            <td>{{combo.tub_type}}</td>
+            <td>{{combo.tub_size}}</td>
+            {% set clean_toppings = combo.toppings.strip('][').replace("'", "")
+            %}
+            <td>{{clean_toppings}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <!--If user has not commented and rated, show buttonrs, otherwise, Show User rating and comments-->
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <p class="flash">{{ message }}</p>
+      {% endfor %} {% endif %} {% endwith %}
+      <!-- Comments Area -->
+      {% if current_user.is_authenticated: %} {% if current_user_has_rated: %}
+      <!--TODO: Show user comment-->
+      <h3>Your rating here:</h3>
+      <h4>{{ user_rating.rating|round(2) }} ⭐</h4>
+      {% if user_rating.text != '' %}
+      <p>"{{ user_rating.text }}"</p>
+      {% endif %}
+      <span class="sub-text"> You posted on {{user_rating.date}}</span>
+      <br />
+      <br />
+      <a
+        href="{{url_for('edit_rating', rating_id=user_rating.id, combo_id=combo.id)}}"
+        ><button type="button" class="btn btn-primary">Edit Review</button></a
+      >
+      <a
+        href="{{url_for('delete_rating', rating_id=user_rating.id,combo_id=combo.id)}}"
+      >
+        <button type="button" class="btn btn-danger">Delete</button></a
+      >
+      <hr />
+      {% elif is_edit == True: %} {{render_form(form, novalidate=True,
+      button_map={"submit": "primary"}) }} {% else: %} {{render_form(form,
+      novalidate=True, button_map={"submit": "primary"}) }} {% endif %} {% else:
+      %}
+      <h3>Log in or register to be able to rate.</h3>
+      <a href="{{url_for('login')}}"
+        ><button type="button" class="btn btn-primary">Log in</button></a
+      >
+      <a href="{{url_for('register')}}"
+        ><button type="button" class="btn btn-secondary">Register</button></a
+      >
+      {% endif %}
+      <!--Show all combo comments below: -->
+      <div class="rating">
+        <ul class="ratingList">
+          {% for rating in combo.combo_ratings: %}
+          <li>
+            <div class="raterImage">
+              <img src="{{ rating.rating_author.name | gravatar }}" />
+            </div>
+            <div class="ratingText">
+              {{rating.rating|round(2)}} ⭐{% if rating.text == '':
+              %}{{rating.text|safe}}{% else: %}<br />"{{rating.text|safe}}"{%
+              endif%}<br />
+              <span class="sub-text">
+                posted by {{rating.rating_author.name}}</span
+              ><br />
+              <span class="sub-text"> on {{rating.date}}</span>
+            </div>
+            <hr />
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <br />
+
+      <a href="{{ url_for('build_llao') }}"
+        ><button type="button" class="btn btn-link">
+          Return to home page
+        </button></a
+      >
+      <a href="{{ url_for('view_all') }}"
+        ><button type="button" class="btn btn-link">View All</button></a
+      >
+      <a href="{{ url_for('create_combo') }}"
+        ><button type="button" class="btn btn-link">
+          Submit your combo
+        </button></a
+      >
+    </div>
+  </div>
+</div>
+
+
+
+{% include "footer.html" %}

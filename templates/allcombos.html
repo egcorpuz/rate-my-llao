@@ -1,0 +1,44 @@
+{% include "header.html" %}
+
+<div class="container pt-5">
+  <table id="example" class="table table-striped" style="width: 100%">
+    <thead>
+      <tr>
+        <th>Overall Rank</th>
+        <th>Combo Name</th>
+        <th>Overall Rating</th>
+        <th>Type</th>
+        <th>Toppings</th>
+        <th>Created By</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for combo in all_combos: %}
+      <tr>
+        <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</td>
+        <td>{% if current_user.id == 1 or current_user.id == 2: %}<a href="{{url_for('delete_combo', combo_id=combo.id)}}"><button type="button" class="btn btn-danger">DELETE</button></a>{% endif %}<a href="{{url_for('show_combo', combo_id=combo.id)}}">{{combo.combo_name}}</a></td>
+        <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else: %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}</td>
+        <td>{{combo.tub_type}}</td>
+        {% set clean_toppings = combo.toppings.strip('][').replace("'", "") %}
+        <td>{{clean_toppings}}</td>
+        <td>{{combo.author.name}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Overall Rank</th>
+        <th>Combo Name</th>
+        <th>Overall Rating</th>
+        <th>Type</th>
+        <th>Toppings</th>
+        <th>Created By</th>
+      </tr>
+    </tfoot>
+  </table>
+  <br />
+
+  <a href="{{ url_for('build_llao') }}"><button type="button" class="btn btn-link">Return to home page</button></a>
+  <a href="{{ url_for('create_combo') }}"><button type="button" class="btn btn-link">Submit your combo</button></a>
+</div>
+{% include "footer.html" %}

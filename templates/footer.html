@@ -1,0 +1,64 @@
+        <!-- Footer-->
+        <!-- Bootstrap core JS-->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          let multipleCardCarousel = document.querySelector("#carouselExampleControls");
+      
+      
+          if (window.matchMedia("(min-width: 768px)").matches) {
+            let carousel = new bootstrap.Carousel(multipleCardCarousel, {
+              interval: false, // Disable automatic sliding
+              wrap: false, // Prevent wrapping at the end
+            });
+      
+      
+            let carouselWidth = document.querySelector(".carousel-inner").scrollWidth;
+            let cardWidth = document.querySelector(".carousel-item").offsetWidth;
+            let scrollPosition = 0;
+      
+      
+            document.querySelector("#carouselExampleControls .carousel-control-next").addEventListener("click", function () {
+              if (scrollPosition < carouselWidth - cardWidth * 4) {
+                scrollPosition += cardWidth;
+                document.querySelector("#carouselExampleControls .carousel-inner").scroll({ left: scrollPosition, behavior: 'smooth' });
+              }
+            });
+      
+      
+            document.querySelector("#carouselExampleControls .carousel-control-prev").addEventListener("click", function () {
+              if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                document.querySelector("#carouselExampleControls .carousel-inner").scroll({ left: scrollPosition, behavior: 'smooth' });
+              }
+            });
+          } else {
+            multipleCardCarousel.classList.add("slide");
+          }
+        });
+      </script>
+
+
+    
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+          <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2024 GianCorpuz</span>
+        </div>
+      </div>
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+      </ul>
+    </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>
+  

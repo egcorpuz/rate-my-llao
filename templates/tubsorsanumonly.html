@@ -1,0 +1,196 @@
+{% include "header.html" %}
+
+<div class="px-4 pt-5 my-3 text-center">
+  <div class="custom-title">
+    <h1 class="display-4 fw-bold text-body-emphasis text-muted">
+      <p class="text-muted">Top 20<br />{{text_to_show}} Combos</p>
+      <p></p>
+    </h1>
+  </div>
+  <div class="col-lg-6 mx-auto">
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
+    <p class="flash">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %}
+    <br />
+    <p class="lead mb-4">
+      Did you know? With the current available toppings, you can create 4,096
+      combinations of toppings for a Large Tub. There are 8,192 combinations for
+      a Sanum Petit and 524,288 combinations for a Sanum Regular. See if we
+      can mix and try them all!
+    </p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+      <a href="{{url_for('create_combo')}}"
+        ><button type="button" class="btn btn-success btn-lg px-4 me-sm-3">
+          Submit a Combo
+        </button></a
+      >
+      <a href="{{url_for('view_all')}}"
+        ><button type="button" class="btn btn-outline-secondary btn-lg px-4">
+          View All
+        </button></a
+      >
+    </div>
+  </div>
+  <div class="overflow-hidden" style="max-height: 30vh"></div>
+</div>
+
+<div id="carouselExampleControls" class="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="card">
+        {% set combo1_toppings = all_combos[0].toppings %} {% set combo1_colors
+        = combo1_toppings.strip('][').split(', ') %} {% if combo1_colors|length
+        == 6: %} {% set color1 = color_dict[combo1_colors[0].replace("'", "")]
+        %} {% set color2 = color_dict[combo1_colors[1].replace("'", "")] %} {%
+        set color3 = color_dict[combo1_colors[2].replace("'", "")] %} {% set
+        color4 = color_dict[combo1_colors[3].replace("'", "")] %} {% set color5
+        = color_dict[combo1_colors[4].replace("'", "")] %} {% set color6 =
+        color_dict[combo1_colors[5].replace("'", "")] %} {% endif %} {% if
+        combo1_colors|length == 4: %} {% set color1 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo1_colors[1].replace("'", "")] %} {% set color4 =
+        color_dict[combo1_colors[1].replace("'", "")] %} {% set color5 =
+        color_dict[combo1_colors[2].replace("'", "")] %} {% set color6 =
+        color_dict[combo1_colors[3].replace("'", "")] %} {% endif %} {% if
+        combo1_colors|length == 3: %} {% set color1 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo1_colors[1].replace("'", "")] %} {% set color4 =
+        color_dict[combo1_colors[1].replace("'", "")] %} {% set color5 =
+        color_dict[combo1_colors[2].replace("'", "")] %} {% set color6 =
+        color_dict[combo1_colors[2].replace("'", "")] %} {% endif %} {% if
+        combo1_colors|length == 1: %} {% set color1 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color4 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color5 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% set color6 =
+        color_dict[combo1_colors[0].replace("'", "")] %} {% endif %}
+
+        <div class="img-wrapper c1" style="background-color: {{color1}};"></div>
+        <div class="img-wrapper" style="background-color: {{color2}};"></div>
+        <div class="img-wrapper" style="background-color: {{color3}};"></div>
+        <div class="img-wrapper" style="background-color: {{color4}};"></div>
+        <div class="img-wrapper" style="background-color: {{color5}};"></div>
+        <div class="img-wrapper" style="background-color: {{color6}};"></div>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{text_to_show}} Top 1: {{all_combos[0].combo_name}}
+          </h5>
+          <span class="sub-text">(Top {{all_combos[0].ranking}} overall)</span
+            ><br />
+          <span class="sub-text"> posted by {{all_combos[0].author.name}}</span
+          ><br />
+          <p class="card-text">
+            Overall Rating: {% if not all_combos[0].number_of_ratings or all_combos[0].overall_rating == 0 %}No Ratings yet{% else: %}{{all_combos[0].overall_rating|round(2)}}/10⭐{% endif %}<br />
+            Number of Ratings: {% if not all_combos[0].number_of_ratings or all_combos[0].overall_rating == 0 %}No Ratings yet{% else: %}{{all_combos[0].number_of_ratings}}{% endif %}<br />
+            Type: {{all_combos[0].tub_type}}<br />
+            Size: {{all_combos[0].tub_size}}<br />
+            {% set clean_toppings = all_combos[0].toppings.strip('][').replace("'", "") %}
+            Toppings:<br />
+            {{clean_toppings}}
+          </p>
+          <a
+            href="{{url_for('show_combo', combo_id=all_combos[0].id)}}"
+            class="btn btn-primary"
+            >View</a
+          >
+        </div>
+      </div>
+    </div>
+    {% for combo in all_combos[1:]: %}
+    <div class="carousel-item">
+      <div class="card">
+        {% set combo_toppings = combo.toppings %} {% set combo_colors =
+        combo_toppings.strip('][').split(', ') %} {% if combo_colors|length ==
+        6: %} {% set color1 = color_dict[combo_colors[0].replace("'", "")] %} {%
+        set color2 = color_dict[combo_colors[1].replace("'", "")] %} {% set
+        color3 = color_dict[combo_colors[2].replace("'", "")] %} {% set color4 =
+        color_dict[combo_colors[3].replace("'", "")] %} {% set color5 =
+        color_dict[combo_colors[4].replace("'", "")] %} {% set color6 =
+        color_dict[combo_colors[5].replace("'", "")] %} {% endif %} {% if
+        combo_colors|length == 4: %} {% set color1 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo_colors[1].replace("'", "")] %} {% set color4 =
+        color_dict[combo_colors[1].replace("'", "")] %} {% set color5 =
+        color_dict[combo_colors[2].replace("'", "")] %} {% set color6 =
+        color_dict[combo_colors[3].replace("'", "")] %} {% endif %} {% if
+        combo_colors|length == 3: %} {% set color1 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo_colors[1].replace("'", "")] %} {% set color4 =
+        color_dict[combo_colors[1].replace("'", "")] %} {% set color5 =
+        color_dict[combo_colors[2].replace("'", "")] %} {% set color6 =
+        color_dict[combo_colors[2].replace("'", "")] %} {% endif %} {% if
+        combo_colors|length == 1: %} {% set color1 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color2 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color3 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color4 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color5 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% set color6 =
+        color_dict[combo_colors[0].replace("'", "")] %} {% endif %}
+
+        <div class="img-wrapper c1" style="background-color: {{color1}};"></div>
+        <div class="img-wrapper" style="background-color: {{color2}};"></div>
+        <div class="img-wrapper" style="background-color: {{color3}};"></div>
+        <div class="img-wrapper" style="background-color: {{color4}};"></div>
+        <div class="img-wrapper" style="background-color: {{color5}};"></div>
+        <div class="img-wrapper" style="background-color: {{color6}};"></div>
+        <div class="card-body">
+          <h5 class="card-title">
+            {{text_to_show}} Top {{ loop.index }}: {{combo.combo_name}}
+          </h5>
+          <span class="sub-text">(Top {{combo.ranking}} overall)</span
+            ><br />
+          <span class="sub-text"> posted by {{combo.author.name}}</span><br />
+          <p class="card-text">
+            Overall Rating: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else: %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}<br />
+            Number of Ratings: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else: %}{{combo.number_of_ratings}}{% endif %}<br />
+            Type: {{combo.tub_type}}<br />
+            Size: {{combo.tub_size}}<br />
+            {% set clean_toppings = combo.toppings.strip('][').replace("'", "") %}
+            Toppings:<br />
+            {{clean_toppings}}
+          </p>
+          <a
+            href="{{url_for('show_combo', combo_id=combo.id)}}"
+            class="btn btn-primary"
+            >View</a
+          >
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselExampleControls"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<div class="px-4 pt-5 my-3 text-center">
+  <h1 class="display-4 fw-bold text-body-emphasis text-muted">
+    Try me on mobile! See how responsive I am.
+  </h1>
+
+  <div class="overflow-hidden" style="max-height: 30vh"></div>
+</div>
+
+{% include "footer.html" %}

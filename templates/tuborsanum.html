@@ -1,0 +1,73 @@
+{% include "header.html" %} {% from "bootstrap5/form.html" import render_form,
+render_field %}
+
+<div class="col-lg-8 col-md-10 mx-auto">
+  <form method="post">
+    {{ form.csrf_token() }} {% with messages = get_flashed_messages() %} {% if
+    messages %} {% for message in messages %}
+    <p class="flash">{{ message }}</p>
+    {% endfor %} {% endif %} {% endwith %}
+
+    <div class="rgrp" id="uniquergrpcategory">
+      {{render_field(form.category)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrptub" style="display:{{ display }}">
+      {{render_field(form.subcategory_tub, placeholder='pick a size...')}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpsanum" style="display:{{ display }}">
+      {{render_field(form.subcategory_sanum, placeholder='pick a size...')}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpfruit1" style="display:{{ display }}">
+      {{render_field(form.fruit1)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpfruit2" style="display:{{ display }}">
+      {{render_field(form.fruit2)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpfruit3" style="display:{{ display }}">
+      {{render_field(form.fruit3)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpcrunch1" style="display:{{ display }}">
+      {{render_field(form.crunch1)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpcrunch2" style="display:{{ display }}">
+      {{render_field(form.crunch2)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpsauce1" style="display:{{ display }}">
+      {{render_field(form.sauce1)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrptopping1" style="display:{{ display }}">
+      {{render_field(form.topping1)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrptopping2" style="display:{{ display }}">
+      {{render_field(form.topping2)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrptopping3" style="display:{{ display }}">
+      {{render_field(form.topping3)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpprompt" style="display:{{ display }}">
+      {{render_field(form.ask_user)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpcomboname" style="display:{{ display }}">
+      {{render_field(form.combo_name)}}
+    </div>
+
+    <div class="rgrp" id="uniquergrpsubmit" style="display:{{ display }}">
+      {{render_field(form.submit, button_map={"submit": "primary"})}}
+    </div>
+  </form>
+</div>
+
+{% include "footer.html" %}
