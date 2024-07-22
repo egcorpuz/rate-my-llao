@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, PasswordField, SelectField, TextAr
 from wtforms.validators import DataRequired, URL, Optional, Length
 from flask_ckeditor import CKEditorField
 
-fruit = [('watermelon', 'watermelon'), ('banana', 'banana'), ('pineapple', 'pineapple'),
+fruit = [('watermelon', 'watermelon'), ('Dragonfruit', 'Dragonfruit'), ('banana', 'banana'), ('pineapple', 'pineapple'),
          ('melon', 'melon'), ('mango', 'mango'), ('kiwi', 'kiwi'),
          ('pomegranate', 'pomegranate'), ('strawberry', 'strawberry')]
 crunch = [('almond crocanti', 'almond crocanti'), ('chips ahoy!', 'chips ahoy!'),
@@ -20,6 +20,7 @@ sauce = [('white chococrock','white chococrock'), ('dark chocolate', 'dark choco
          ('Ovaltime Crunchy Cream', 'Ovaltime Crunchy Cream'), ('Pistachio', 'Pistachio')]
 TOPPINGS_DICT = {
     'watermelon': '#FFE3EB',
+    'Dragonfruit': '#C13969',
     'banana': '#FFE36D',
     'pineapple': '#FFF547',
     'melon': '#EEDB69',
