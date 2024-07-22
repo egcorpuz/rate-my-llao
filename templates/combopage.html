@@ -7,10 +7,10 @@ render_field %}
       <h1>{{combo.combo_name}}</h1>
       <span class="sub-text"> by {{combo.author.name}}</span>
       <span class="sub-text"> on {{combo.date}}</span>
-      <h3>Overall Rank: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</h3>
-      <h4>Overall Rating: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else:
-              %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}</h4>
-      <h4>Number of ratings: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{%else:%}{{combo.number_of_ratings}}{%endif%}</h4>
+      <h5>Overall Rank: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</h5>
+      <h5>Overall Rating: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else:
+              %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}</h5>
+      <h5>Number of ratings: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{%else:%}{{combo.number_of_ratings}}{%endif%}</h5>
 
       <table class="table table-dark table-striped table-hover">
         <tbody>
