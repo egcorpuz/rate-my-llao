@@ -18,7 +18,7 @@ YEAR=date.today().strftime("%Y")
 def admin_only(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        if current_user.id not in [1, 2]:
+        if current_user.name not in ['AdminGian', 'AdminRey']:
             abort(403)  # Forbidden
         return func(*args, **kwargs)
     return decorated_function

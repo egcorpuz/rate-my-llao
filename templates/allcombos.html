@@ -16,7 +16,7 @@
       {% for combo in all_combos: %}
       <tr>
         <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</td>
-        <td>{% if current_user.id == 1 or current_user.id == 2: %}<a href="{{url_for('delete_combo', combo_id=combo.id)}}"><button type="button" class="btn btn-danger">DELETE</button></a>{% endif %}<a href="{{url_for('show_combo', combo_id=combo.id)}}">{{combo.combo_name}}</a></td>
+        <td>{% if current_user.name == 'AdminGian' or current_user.name == 'AdminRey': %}<a href="{{url_for('delete_combo', combo_id=combo.id)}}"><button type="button" class="btn btn-danger">DELETE</button></a>{% endif %}<a href="{{url_for('show_combo', combo_id=combo.id)}}">{{combo.combo_name}}</a></td>
         <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else: %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}</td>
         <td>{{combo.tub_type}}</td>
         {% set clean_toppings = combo.toppings.strip('][').replace("'", "") %}
