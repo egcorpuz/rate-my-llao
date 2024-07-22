@@ -484,9 +484,14 @@ def login():
 @admin_only
 def delete_combo(combo_id):
     combo_to_delete = db.get_or_404(LlaoCombo, combo_id)
+    # ratings_to_delete = db.session.query(Rating.rating).filter_by(combo_id=combo_id)
+    query = db.session.query(Rating).filter(Rating.combo_id == combo_id)
+    ratings_to_delete = query.all()
+    for rating in ratings_to_delete:
+        db.session.delete(rating)
+        db.session.commit()
     db.session.delete(combo_to_delete)
     db.session.commit()
-    reorder_combo()
     return redirect(url_for('view_all'))
 
 @app.route('/buildllao/logout')
@@ -497,4 +502,3 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=False)
-
