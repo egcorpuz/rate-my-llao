@@ -1,6 +1,6 @@
 {% include "header.html" %} {% from "bootstrap5/form.html" import render_form,
 render_field %}
-
+<div class="container">
 <div class="col-lg-8 col-md-10 mx-auto">
   <form method="post">
     {{ form.csrf_token() }} {% with messages = get_flashed_messages() %} {% if
@@ -69,5 +69,5 @@ render_field %}
     </div>
   </form>
 </div>
-
+</div>
 {% include "footer.html" %}

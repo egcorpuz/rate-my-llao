@@ -9,7 +9,6 @@
         <th>Overall Rating</th>
         <th>Type</th>
         <th>Toppings</th>
-        <th>Created By</th>
       </tr>
     </thead>
     <tbody>
@@ -21,7 +20,6 @@
         <td>{{combo.tub_type}}</td>
         {% set clean_toppings = combo.toppings.strip('][').replace("'", "") %}
         <td>{{clean_toppings}}</td>
-        <td>{{combo.author.name}}</td>
       </tr>
       {% endfor %}
     </tbody>

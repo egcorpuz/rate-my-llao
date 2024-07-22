@@ -7,29 +7,23 @@ render_field %}
       <h1>{{combo.combo_name}}</h1>
       <span class="sub-text"> by {{combo.author.name}}</span>
       <span class="sub-text"> on {{combo.date}}</span>
+      <h3>Overall Rank: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</h3>
+      <h4>Overall Rating: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else:
+              %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}</h4>
+      <h4>Number of ratings: {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{%else:%}{{combo.number_of_ratings}}{%endif%}</h4>
+
       <table class="table table-dark table-striped table-hover">
         <tbody>
           <tr>
-            <td>Overall Rank</td>
-            <td>No. of Ratings</td>
-            <td>Overall Rating</td>
+            <td>Toppings</td>
             <td>Type</td>
             <td>Size</td>
-            <td>Toppings</td>
           </tr>
           <tr>
-            <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}N/A{%else:%}{{combo.ranking}}{%endif%}</td>
-            <td>{% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{%else:%}{{combo.number_of_ratings}}{%endif%}</td>
-            <td>
-              {% if not combo.number_of_ratings or combo.overall_rating == 0 %}No Ratings yet{% else:
-              %}{{combo.overall_rating|round(2)}}/10⭐{% endif %}
-            </td>
-            <!--td>{{combo.combo_name}}</td-->
+            {% set clean_toppings = combo.toppings.strip('][').replace("'", "") %}
+            <td>{{clean_toppings}}</td>
             <td>{{combo.tub_type}}</td>
             <td>{{combo.tub_size}}</td>
-            {% set clean_toppings = combo.toppings.strip('][').replace("'", "")
-            %}
-            <td>{{clean_toppings}}</td>
           </tr>
         </tbody>
       </table>
