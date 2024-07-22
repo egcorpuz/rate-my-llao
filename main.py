@@ -9,7 +9,6 @@ from sqlalchemy import Integer, String, Text, Float, and_, func, desc
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreateCombo, RegisterForm, LoginForm, RatingForm, TOPPINGS_DICT
-import smtplib
 import os
 
 YEAR=date.today().strftime("%Y")
@@ -177,7 +176,6 @@ def build_llao():
         rank += 1
         ordered_combo.ranking = rank
         db.session.commit()
-    # len(ordered_combos) < 2
     if len(ordered_combos) < 2:
         return render_template("index0.html")
     if len(ordered_combos) > 20:
@@ -190,7 +188,6 @@ def tubs_only():
     reorder_combo()
     query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Tub').order_by(desc(LlaoCombo.overall_rating))
     tub_combos = query.all()
-    # len(ordered_combos) < 2
     if len(tub_combos) < 2:
         return render_template("index0.html")
     if len(tub_combos) > 20:
@@ -203,7 +200,6 @@ def sanum_only():
     reorder_combo()
     query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Sanum').order_by(desc(LlaoCombo.overall_rating))
     sanum_combos = query.all()
-    # len(ordered_combos) < 2
     if len(sanum_combos) < 2:
         return render_template("index0.html")
     if len(sanum_combos) > 20:
@@ -243,8 +239,7 @@ def view_all():
         rank += 1
         ordered_combo.ranking = rank
         db.session.commit()
-    # len(ordered_combos) < 2
-    if len(ordered_combos) < 1:
+    if len(ordered_combos) < 2:
         flash("Create more combos.")
         return redirect(url_for('build_llao'))
     return render_template("allcombos.html", all_combos=ordered_combos, current_year=YEAR)
