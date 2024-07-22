@@ -188,7 +188,7 @@ def build_llao():
 @app.route('/buildllao/TubsOnly')
 def tubs_only():
     reorder_combo()
-    query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Tub').order_by(LlaoCombo.overall_rating)
+    query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Tub').order_by(desc(LlaoCombo.overall_rating))
     tub_combos = query.all()
     # len(ordered_combos) < 2
     if len(tub_combos) < 2:
@@ -201,7 +201,7 @@ def tubs_only():
 @app.route('/buildllao/SanumOnly')
 def sanum_only():
     reorder_combo()
-    query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Sanum').order_by(LlaoCombo.overall_rating)
+    query = db.session.query(LlaoCombo).filter(LlaoCombo.tub_type == 'Sanum').order_by(desc(LlaoCombo.overall_rating))
     sanum_combos = query.all()
     # len(ordered_combos) < 2
     if len(sanum_combos) < 2:
